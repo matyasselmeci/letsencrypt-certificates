@@ -61,6 +61,9 @@ targets = 4042bcee.signing_policy \
           a363cdd3.0 2f8a4f35.0 \
           cde2be7c.0 74303716.0 \
           66297767.0 c1af242b.0 \
+
+
+pems = \
           isrgrootx1.pem \
           isrg-root-x2.pem \
           lets-encrypt-e5.pem \
@@ -82,7 +85,7 @@ targets = 4042bcee.signing_policy \
           lets-encrypt-yr2.pem \
           lets-encrypt-yr3.pem
 
-installfiles = $(targets) $(sources)
+installfiles = $(pems) $(targets) $(sources)
 
 installdir = /etc/grid-security/certificates
 
@@ -91,7 +94,7 @@ GET_WITH_NAME = curl -o
 INSTALL = install
 LINK = ln -s
 
-all : $(targets)
+all : $(pems) $(targets)
 
 install : all
 	$(INSTALL) $(installfiles) $(DESTDIR)$(installdir)
@@ -121,6 +124,7 @@ check : all
 	openssl verify -CApath . lets-encrypt-yr2.pem
 	openssl verify -CApath . lets-encrypt-yr3.pem
 
+pems : $(pems)
 
 # make special variables: $< is the first prereq; $@ is the target
 
