@@ -14,9 +14,9 @@ lets-encrypt-r13.pem,https://letsencrypt.org/certs/2024/r13.pem
 lets-encrypt-r14.pem,https://letsencrypt.org/certs/2024/r14.pem
 isrg-root-ye.pem,https://letsencrypt.org/certs/gen-y/root-ye.pem
 isrg-root-yr.pem,https://letsencrypt.org/certs/gen-y/root-yr.pem
-lets-encrypt-int-ye1.pem,https://letsencrypt.org/certs/gen-y/int-ye1.pem
-lets-encrypt-int-ye2.pem,https://letsencrypt.org/certs/gen-y/int-ye2.pem
-lets-encrypt-int-ye3.pem,https://letsencrypt.org/certs/gen-y/int-ye3.pem
-lets-encrypt-int-yr1.pem,https://letsencrypt.org/certs/gen-y/int-yr1.pem
-lets-encrypt-int-yr2.pem,https://letsencrypt.org/certs/gen-y/int-yr2.pem
-lets-encrypt-int-yr3.pem,https://letsencrypt.org/certs/gen-y/int-yr3.pem
+lets-encrypt-ye1.pem,https://letsencrypt.org/certs/gen-y/int-ye1.pem
+lets-encrypt-ye2.pem,https://letsencrypt.org/certs/gen-y/int-ye2.pem
+lets-encrypt-ye3.pem,https://letsencrypt.org/certs/gen-y/int-ye3.pem
+lets-encrypt-yr1.pem,https://letsencrypt.org/certs/gen-y/int-yr1.pem
+lets-encrypt-yr2.pem,https://letsencrypt.org/certs/gen-y/int-yr2.pem
+lets-encrypt-yr3.pem,https://letsencrypt.org/certs/gen-y/int-yr3.pem
