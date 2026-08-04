@@ -26,6 +26,7 @@ targets = 4042bcee.signing_policy \
           137e9a94.signing_policy 36f5bce7.signing_policy \
           4042bcee.0 \
           6187b673.0 \
+          0b9bc432.0 8794b4e3.0 \
           462422cf.0 bae39ced.0 \
           9aad238c.0 f7679d31.0 \
           aa578057.0 09e5bea5.0 \
