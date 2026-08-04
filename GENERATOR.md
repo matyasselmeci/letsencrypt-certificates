@@ -73,6 +73,29 @@ python3 generate-makefile.py certificates.csv > Makefile
 
 ## Understanding the Generated Makefile
 
+### Signing Policy Files
+
+The `.signing_policy` files define which certificates each CA is authorized to sign. Format:
+
+```
+access_id_CA   X509    '<certificate subject DN>'
+pos_rights     globus  CA:sign
+cond_subjects  globus  '<comma-separated list of authorized subject DNs>'
+```
+
+**Important**: The `make-signing-policy.sh` script provides only a basic template with wildcard policies. The actual signing_policy files in this repo have been manually curated to specify exactly which CAs each root is authorized to sign:
+
+- **ISRG Root X1**: Authorizes only specific Let's Encrypt R-series CAs (R10-R14)
+- **ISRG Root X2**: Authorizes only specific Let's Encrypt E-series CAs (E5-E9)  
+- **Let's Encrypt intermediate CAs**: Use wildcard `"/CN=*"` to authorize end-entity certificates
+
+When adding new certificates, maintain the existing pattern in their `.signing_policy` files or regenerate with:
+```bash
+bash make-signing-policy.sh new-cert.pem > new-cert.signing_policy
+```
+
+Then manually edit the `cond_subjects` line if needed to specify authorized signers.
+
 ### Hash Derivation
 
 For each certificate, the script computes two hashes:
