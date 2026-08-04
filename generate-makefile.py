@@ -11,6 +11,10 @@ The CSV format is:
 Example:
   isrgrootx1.pem,https://letsencrypt.org/certs/isrgrootx1.pem
   lets-encrypt-e5.pem,https://letsencrypt.org/certs/2024/e5.pem
+
+Get the download URLs by going to https://letsencrypt.org/certificates/ and
+looking for the `pem` links.
+
 """
 
 import subprocess
@@ -64,6 +68,7 @@ def main():
         sys.exit(1)
     
     certificates = []
+    pems = []
     with open(table_file) as f:
         reader = csv.reader(f, skipinitialspace=True)
         # Skip header if present
@@ -73,6 +78,7 @@ def main():
                 pem_file = row[0].strip()
                 url = row[1].strip() if len(row) > 1 else None
                 certificates.append((pem_file, url))
+                pems.append(pem_file)
     
     # Group certificates by their source pem files for symlink generation
     symlink_groups = {}  # Maps source pem to list of (old_hash, new_hash) pairs
@@ -89,25 +95,32 @@ def main():
                 symlink_groups[pem_file] = []
             symlink_groups[pem_file].append((old_hash, new_hash))
     
-    # Generate sources list (signing_policy files to download)
+    # Generate sources list (signing_policy files that are hand-created)
     sources = [pem.replace(".pem", ".signing_policy") for pem, _ in certificates]
     print(f"sources = {' \\\n          '.join(sources)}\n")
     
     # Generate targets list (derived .signing_policy and .0 files)
-    targets = []
-    for pem_file in certificates:
+    # targets = []
+    signpols = []
+    dotzeros = []
+    for pem_file in pems:
         hashes = symlink_groups.get(pem_file)
         if hashes:
             for old_hash, new_hash in hashes:
-                targets.append(f"{old_hash}.signing_policy")
-                targets.append(f"{new_hash}.signing_policy")
-                targets.append(f"{old_hash}.0")
-                targets.append(f"{new_hash}.0")
+                # targets.append(f"{old_hash}.signing_policy")
+                # targets.append(f"{new_hash}.signing_policy")
+                # targets.append(f"{old_hash}.0")
+                # targets.append(f"{new_hash}.0")
+                signpols.append(f"{old_hash}.signing_policy {new_hash}.signing_policy")
+                dotzeros.append(f"{old_hash}.0 {new_hash}.0")
+
+    targets = signpols + dotzeros
     
-    targets_with_pems = targets + [pem for pem, _ in certificates]
-    print(f"targets = {' \\\n          '.join(targets_with_pems)}\n")
+    print(f"targets = {' \\\n          '.join(targets)}\n")
+
+    print(f"pems = {' \\\n       '.join(pems)}\n")
     
-    print("installfiles = $(targets) $(sources)\n")
+    print("installfiles = $(pems) $(targets) $(sources)\n")
     print("installdir = /etc/grid-security/certificates\n")
     print("GET = curl -O")
     print("GET_WITH_NAME = curl -o")
@@ -115,7 +128,7 @@ def main():
     print("LINK = ln -s\n")
     
     # Generate phony targets
-    print("all : $(targets)\n")
+    print("all : $(pems) $(targets)\n")
     print("install : all")
     print("\t$(INSTALL) $(installfiles) $(DESTDIR)$(installdir)\n")
     print("clean :")
@@ -126,9 +139,10 @@ def main():
     for pem_file, _ in certificates:
         print(f"\topenssl verify -CApath . {pem_file}")
     print()
+    print("pems : $(pems)")
+    print()
     
     # Generate symlink rules for .signing_policy files
-    print("# make special variables: $< is the first prereq; $@ is the target\n")
     for pem_file, _ in certificates:
         hashes = symlink_groups.get(pem_file)
         if hashes:
@@ -138,6 +152,7 @@ def main():
                 hash_targets.append(f"{old_hash}.signing_policy")
                 hash_targets.append(f"{new_hash}.signing_policy")
             print(f"{' '.join(hash_targets)} : {source_signing_policy}")
+            # make special variables: $< is the first prereq; $@ is the target
             print("\t$(LINK) $< $@")
     
     print()
@@ -156,9 +171,6 @@ def main():
     print()
     
     # Generate download rules
-    print("# Look for the `pem` links on < https://letsencrypt.org/certificates/ >.")
-    print("# Download the \"self-signed\" root CAs, not the cross-signed ones.")
-    print("# Include the ones marked \"backup\".\n")
     
     for pem_file, url in certificates:
         print(f"{pem_file} :")

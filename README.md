@@ -64,3 +64,17 @@ Match
 # openssl x509 -subject -noout -in /etc/grid-security/hostcert.pem 
 subject= /CN=example.org
 ```
+
+# Updates
+
+The downloads are made from a certificate table (`certificates.csv`) with the following format:
+```
+local file path, upstream URL
+```
+for example
+```
+isrgrootx1.pem,https://letsencrypt.org/certs/isrgrootx1.pem
+```
+
+Run the script `generate-makefile.py` after editing the table to update the Makefile.
+
