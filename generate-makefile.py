@@ -4,6 +4,13 @@
 This script reads a CSV table of certificate metadata and generates a Makefile
 that automates downloading certificates and creating symlinks with their OpenSSL
 subject hashes as filenames.
+
+The CSV format is:
+  pem_filename, download_url
+
+Example:
+  isrgrootx1.pem,https://letsencrypt.org/certs/isrgrootx1.pem
+  lets-encrypt-e5.pem,https://letsencrypt.org/certs/2024/e5.pem
 """
 
 import subprocess
@@ -16,6 +23,10 @@ def get_subject_hashes(pem_file):
     """Get old and new OpenSSL subject hashes for a certificate.
     
     Returns a tuple of (old_hash, new_hash), or None if the file doesn't exist.
+    
+    The hashes come from:
+    - old_hash: openssl x509 -noout -subject_hash_old (< 1.0.0 format)
+    - new_hash: openssl x509 -noout -subject_hash (modern format)
     """
     if not Path(pem_file).exists():
         return None
