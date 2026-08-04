@@ -1,0 +1,5 @@
+# Ignore generated symlinks
+*.0
+*.signing_policy
+!isrg*.signing_policy
+!lets-encrypt-*.signing_policy
