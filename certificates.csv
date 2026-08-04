@@ -1,0 +1,22 @@
+# Certificate definitions: pem_filename, download_url
+# The hashes are automatically derived from the PEM files using OpenSSL
+isrgrootx1.pem,https://letsencrypt.org/certs/isrgrootx1.pem
+isrg-root-x2.pem,https://letsencrypt.org/certs/isrg-root-x2.pem
+lets-encrypt-e5.pem,https://letsencrypt.org/certs/2024/e5.pem
+lets-encrypt-e6.pem,https://letsencrypt.org/certs/2024/e6.pem
+lets-encrypt-r10.pem,https://letsencrypt.org/certs/2024/r10.pem
+lets-encrypt-r11.pem,https://letsencrypt.org/certs/2024/r11.pem
+lets-encrypt-e7.pem,https://letsencrypt.org/certs/2024/e7.pem
+lets-encrypt-e8.pem,https://letsencrypt.org/certs/2024/e8.pem
+lets-encrypt-e9.pem,https://letsencrypt.org/certs/2024/e9.pem
+lets-encrypt-r12.pem,https://letsencrypt.org/certs/2024/r12.pem
+lets-encrypt-r13.pem,https://letsencrypt.org/certs/2024/r13.pem
+lets-encrypt-r14.pem,https://letsencrypt.org/certs/2024/r14.pem
+isrg-root-ye.pem,https://letsencrypt.org/certs/gen-y/root-ye.pem
+isrg-root-yr.pem,https://letsencrypt.org/certs/gen-y/root-yr.pem
+lets-encrypt-int-ye1.pem,https://letsencrypt.org/certs/gen-y/int-ye1.pem
+lets-encrypt-int-ye2.pem,https://letsencrypt.org/certs/gen-y/int-ye2.pem
+lets-encrypt-int-ye3.pem,https://letsencrypt.org/certs/gen-y/int-ye3.pem
+lets-encrypt-int-yr1.pem,https://letsencrypt.org/certs/gen-y/int-yr1.pem
+lets-encrypt-int-yr2.pem,https://letsencrypt.org/certs/gen-y/int-yr2.pem
+lets-encrypt-int-yr3.pem,https://letsencrypt.org/certs/gen-y/int-yr3.pem
